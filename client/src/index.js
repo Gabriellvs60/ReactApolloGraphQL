@@ -15,12 +15,12 @@ const client = new ApolloClient({
 
 const Root = () => (
     <Router>
-        <switch>
+        <Switch>
             <Route path="/" exact component={App} />
             <Route path="/signin" component={Signin} />
             <Route path="/signup" component={Signup} />
-            {/* <Redirect to="/" /> */}
-        </switch>
+            <Redirect to="/" /> 
+        </Switch>
     </Router>
 )
 

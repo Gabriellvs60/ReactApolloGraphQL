@@ -1,36 +1,87 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Mutation } from 'react-apollo';
+import Error from '../Error';
+import { SIGNUP_USER } from '../../queries';
+
+const initialState = {
+    username: "",
+    email: "",
+    password: "",
+    passwordConfirmation: ""
+};
 
 class Signup extends Component {
-    state = {
-        username: "",
-        email: "",
-        password: "",
-        passwordConfirmation: ""
-    };
-    
-    handleChange = event => {
-        const {name, value} = event.target;
-        console.log(name, ':', value);
+    state = { ...initialState};
+
+    clearState = () => {
+        this.setState({ ...initialState})
     }
-    
-    render(){
-        return(
-           <div className="App">
-               <h2 className="App">Signup</h2>
-               <form className="form">
-                   <input type="text" name="username" 
-                   placeholder="Username"
-                   onChange={this.handleChange}/>
-                   <input type="email" name="email" 
-                   placeholder="Email Address"
-                   onChange={this.handleChange}/>
-                   <input type="password" name="password" 
-                   placeholder="Password"  onChange={this.handleChange}/>
-                   <input type="password" name="passwordConfirmation" 
-                   placeholder="Confirm Password"  onChange={this.handleChange}/>
-                    <button type="submit" className="button-primary">Submit</button>
-               </form>
-           </div>
+
+    handleChange = event => {
+        const { name, value } = event.target;
+        this.setState({ [name]: value })
+    }
+
+    handleSubmit = (event, signupUser) => {
+        event.preventDefault();
+        signupUser().then(data => {
+            console.log(data);
+            this.clearState();
+        });
+    };
+
+    validateForm = () => {
+        const { username, email, password, passwordConfirmation } = 
+        this.state;
+        const isInvalid = !username || !email || !password || 
+        password !== passwordConfirmation;
+        return isInvalid;
+
+    }
+
+    render() {
+        const { username, email, password, passwordConfirmation } = this.state;
+        return (
+            <div className="App">
+                <h2 className="App">Signup</h2>
+                <Mutation mutation={SIGNUP_USER} variables={{
+                    username,
+                    email, password
+                }}>
+                    {(signupUser, { data, loading, error }) => {
+                        return (
+                            <form className="form" onSubmit={event =>
+                                this.handleSubmit(event, signupUser)}>
+                                <input type="text" name="username"
+                                    placeholder="Username"
+                                    onChange={this.handleChange}
+                                    value={username}
+                                />
+                                <input type="email" name="email"
+                                    placeholder="Email Address"
+                                    onChange={this.handleChange}
+                                    value={email}
+                                />
+                                <input type="password" name="password"
+                                    placeholder="Password" onChange={this.handleChange}
+                                    value={password}
+                                />
+                                <input type="password" name="passwordConfirmation"
+                                    placeholder="Confirm Password" onChange={this.handleChange}
+                                    value={passwordConfirmation}
+                                />
+                                <button type="submit" 
+                                disabled={loading || this.validateForm()}
+                                className="button-primary">
+                                    Submit
+                                
+                                </button>
+                                {error && <Error error={error} />}
+                            </form>
+                        )
+                    }}
+                </Mutation>
+            </div>
         )
     }
 }
