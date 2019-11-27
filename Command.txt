@@ -1,0 +1,2 @@
+npm run dev
+roda o backend e o frontend
