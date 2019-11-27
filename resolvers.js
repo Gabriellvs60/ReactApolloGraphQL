@@ -34,7 +34,7 @@ exports.resolvers = {
       if(!user){
         throw new Error('User not found');
       }
-      const isValidPassword = bcrypt.commpare(password, user.password);
+      const isValidPassword = bcrypt.compare(password, user.password);
       if(!isValidPassword){
         throw new Error('invalid password');
       }
