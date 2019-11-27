@@ -33,8 +33,8 @@ class Signup extends Component {
     validateForm = () => {
         const { username, email, password, passwordConfirmation } = 
         this.state;
-        const isInvalid = !username || !email || !password || 
-        password !== passwordConfirmation;
+        const isInvalid = 
+        !username || !email || !password || password !== passwordConfirmation;
         return isInvalid;
 
     }
