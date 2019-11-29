@@ -1,19 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import {Query} from 'react-apollo';
-import {GET_CURRENT_USER} from '../queries';
+import { Query } from "react-apollo";
+import { GET_CURRENT_USER } from "../queries";
 
 const withSession = Component => props => (
-    <Query query={GET_CURRENT_USER}>
-        {({data, loading, refetch}) => {
-            if(loading) return null;
-            console.log(data);
-            return(
-                //pass the data were getting from prop session
-                <Component {...props} refetch={refetch} session={data}/>
-            )
-        }}
-    </Query>
+  <Query query={GET_CURRENT_USER}>
+    {({ data, loading, refetch }) => {
+      if (loading) return null;
+       console.log(data);
+      return <Component {...props} refetch={refetch} session={data} />;
+    }}
+  </Query>
 );
 
 export default withSession;

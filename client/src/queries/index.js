@@ -19,13 +19,17 @@ export const GET_ALL_RECIPES =  gql `
 /* User Queries */
 
 export const GET_CURRENT_USER = gql`
-query{
-  getCurrentUser{
-    username
-    joinDate
-    email
+  query {
+    getCurrentUser {
+      username
+      joinDate
+      email
+      favorites {
+        _id
+        name
+      }
+    }
   }
-}
 `;
 /* User Mutations*/
 export const SIGNIN_USER = gql`
