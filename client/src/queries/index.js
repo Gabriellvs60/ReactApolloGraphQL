@@ -21,8 +21,29 @@ query($_id: ID!){
     instructions
     createdDate
     likes
+    username
   }
 }
+`;
+
+export const GET_USER_RECIPES = gql`
+  query($username: String!) {
+    getUserRecipes(username: $username) {
+      _id
+      name
+      likes
+    }
+  }
+`;
+
+export const SEARCH_RECIPES = gql`
+  query($searchTerm: String) {
+    searchRecipes(searchTerm: $searchTerm) {
+      _id
+      name
+      likes
+    }
+  }
 `;
 /* Recipes Mutations */
 export const ADD_RECIPE = `
