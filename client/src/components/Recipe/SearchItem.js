@@ -1,12 +1,13 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
 
-const SearchItem = () => (
-    <li key={recipe._id}>
-        <Link to={`/recipes/${recipe._id}`}>
-            <h4>{recipe.name}</h4>
-        </Link>
-        <p>Likes: {recipe.likes}</p>
-    </li>
-)
+const SearchItem = ({ _id, name, likes }) => (
+  <li>
+    <Link to={`/recipes/${_id}`}>
+      <h4>{name}</h4>
+    </Link>
+    <p>Likes: {likes}</p>
+  </li>
+);
 
 export default SearchItem;

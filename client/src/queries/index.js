@@ -70,7 +70,34 @@ mutation(
     likes
   }
 }
-`
+`;
+
+export const LIKE_RECIPE = gql`
+  mutation($_id: ID!, $username: String!) {
+    likeRecipe(_id: $_id, username: $username) {
+      ...LikeRecipe
+    }
+  }
+  ${recipeFragments.like}
+`;
+
+export const UNLIKE_RECIPE = gql`
+  mutation($_id: ID!, $username: String!) {
+    unlikeRecipe(_id: $_id, username: $username) {
+      ...LikeRecipe
+    }
+  }
+  ${recipeFragments.like}
+`;
+
+export const DELETE_USER_RECIPE = gql`
+  mutation($_id: ID!) {
+    deleteUserRecipe(_id: $_id) {
+      _id
+    }
+  }
+`;
+
 /* User Queries */
 
 export const GET_CURRENT_USER = gql`
@@ -86,15 +113,7 @@ export const GET_CURRENT_USER = gql`
     }
   }
 `;
-export const GET_USER_RECIPES = gql`
-  query($username: String!) {
-    getUserRecipes(username: $username) {
-      _id
-      name
-      likes
-    }
-  }
-`;
+
 /* User Mutations*/
 export const SIGNIN_USER = gql`
   mutation($username: String!, $password: String!) {
