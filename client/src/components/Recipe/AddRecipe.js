@@ -1,20 +1,22 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import CKEditor from "react-ckeditor-component";
+
 import { Mutation } from "react-apollo";
 import { ADD_RECIPE, GET_ALL_RECIPES, GET_USER_RECIPES } from "../../queries";
 import Error from "../Error";
-import withAuth from '../withAuth';
+import withAuth from "../withAuth";
+
 const initialState = {
-    name: "",
-    imageUrl: "",
-    instructions: "",
-    category: "Breakfast",
-    description: "",
-    username: ""
-  };
+  name: "",
+  imageUrl: "",
+  instructions: "",
+  category: "Breakfast",
+  description: "",
+  username: ""
+};
 
 class AddRecipe extends React.Component {
-
   state = { ...initialState };
 
   clearState = () => {
@@ -134,7 +136,11 @@ class AddRecipe extends React.Component {
                   value={description}
                 />
                 <label htmlFor="instructions">Recipe Instructions</label>
-              
+                <CKEditor
+                  name="instructions"
+                  content={instructions}
+                  events={{ change: this.handleEditorChange }}
+                />
                 {/* <textarea
                   name="instructions"
                   placeholder="Add instructions"
@@ -158,5 +164,6 @@ class AddRecipe extends React.Component {
   }
 }
 
-export default 
-  withAuth(session => session && session.getCurrentUser)(withRouter(AddRecipe));
+export default withAuth(session => session && session.getCurrentUser)(
+  withRouter(AddRecipe)
+);
